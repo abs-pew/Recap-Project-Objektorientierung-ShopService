@@ -1,10 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ShopService {
-    private ProductRepo productRepo = new ProductRepo();
-    private OrderRepo orderRepo = new OrderMapRepo();
+    public ProductRepo productRepo;
+    public OrderRepo orderRepo;
+
+    public ShopService(ProductRepo productRepo, OrderRepo orderRepo) {
+        this.productRepo = productRepo;
+        this.orderRepo = orderRepo;
+    }
 
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
@@ -21,4 +27,16 @@ public class ShopService {
 
         return orderRepo.addOrder(newOrder);
     }
-}
+
+    public List<Order> getOrdersByStatus(String status) {
+        List<Order> allOrders = orderRepo.getOrders();
+        List<Order> ordersByStatus = new ArrayList<>();
+        ordersByStatus = allOrders.stream()
+                .filter(found -> found.toString().toUpperCase().contains(status.toUpperCase()))
+                .collect(Collectors.toList());
+
+        System.out.println(ordersByStatus.stream().count() + " orders found with status " + status.toUpperCase());
+
+        return ordersByStatus;
+    }
+} //Class
