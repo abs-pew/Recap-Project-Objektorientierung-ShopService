@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +14,7 @@ class ProductRepoTest {
 
         //THEN
         List<Product> expected = new ArrayList<>();
-        expected.add(new Product("1", "Apfel"));
+        expected.add(new Product("1", "Apple"));
         assertEquals(actual, expected);
     }
 
@@ -27,11 +24,11 @@ class ProductRepoTest {
         ProductRepo repo = new ProductRepo();
 
         //WHEN
-        Product actual = repo.getProductById("1");
+        Optional<Product> actual = repo.getProductById("1");
 
         //THEN
-        Product expected = new Product("1", "Apfel");
-        assertEquals(actual, expected);
+        Product expected = new Product("1", "Apple");
+        assertEquals(actual.get(), expected);
     }
 
     @org.junit.jupiter.api.Test
@@ -46,7 +43,7 @@ class ProductRepoTest {
         //THEN
         Product expected = new Product("2", "Banane");
         assertEquals(actual, expected);
-        assertEquals(repo.getProductById("2"), expected);
+        assertEquals(repo.getProductById("2").get(), expected);
     }
 
     @org.junit.jupiter.api.Test
@@ -58,6 +55,7 @@ class ProductRepoTest {
         repo.removeProduct("1");
 
         //THEN
-        assertNull(repo.getProductById("1"));
+        assertTrue(repo.getProductById("1").isEmpty());
+
     }
 }
