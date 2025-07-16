@@ -9,12 +9,16 @@ public class Main {
 
         ShopService macShopService = new ShopService(productRepo, orderRepo);
 
+try {
+    macShopService.addOrder(List.of("MAC002", "MAC004"));
+    // System.out.println(macShopService.orderRepo.toString());
 
-        macShopService.addOrder(List.of("MAC002", "MAC004"));
-       // System.out.println(macShopService.orderRepo.toString());
+    macShopService.addOrder(List.of("MAC001"));
+    macShopService.addOrder(List.of("MAC006"));
 
-        macShopService.addOrder(List.of("MAC001"));
-        macShopService.addOrder(List.of("MAC003"));
+} catch (ProductOutOfStock e) {
+    System.out.println(e.getMessage());
+}
 
       macShopService.orderRepo.getOrders().forEach(System.out::println);
 

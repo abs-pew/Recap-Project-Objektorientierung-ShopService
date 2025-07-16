@@ -13,13 +13,12 @@ public class ShopService {
         this.orderRepo = orderRepo;
     }
 
-    public Order addOrder(List<String> productIds) {
+    public Order addOrder(List<String> productIds) throws ProductOutOfStock {
         List<Product> products = new ArrayList<>();
         for (String productId : productIds) {
             Optional<Product> productToOrder = productRepo.getProductById(productId);
             if (productToOrder.isEmpty()) {
-                System.out.println("Product mit der Id: " + productId + " konnte nicht bestellt werden!");
-                return null;
+                throw new ProductOutOfStock("Product with " + productId + " is currently out of stock.");
             }
             products.add(productToOrder.get());
         }
