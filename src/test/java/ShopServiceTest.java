@@ -9,7 +9,11 @@ class ShopServiceTest {
     @Test
     void addOrderTest() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        ProductRepo productRepo = new ProductRepo();
+        Main.stockProducts(productRepo);
+        OrderRepo orderRepo = new OrderMapRepo();
+
+        ShopService shopService = new ShopService(productRepo, orderRepo);
         List<String> productsIds = List.of("1");
 
         //WHEN
@@ -24,7 +28,11 @@ class ShopServiceTest {
     @Test
     void addOrderTest_whenInvalidProductId_expectNull() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        ProductRepo productRepo = new ProductRepo();
+        Main.stockProducts(productRepo);
+        OrderRepo orderRepo = new OrderMapRepo();
+
+        ShopService shopService = new ShopService(productRepo, orderRepo);
         List<String> productsIds = List.of("1", "2");
 
         //WHEN

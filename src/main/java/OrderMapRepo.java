@@ -26,4 +26,12 @@ public class OrderMapRepo implements OrderRepo{
     public void removeOrder(String id) {
         orders.remove(id);
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("OrderMapRepo{");
+        sb.append("orders=").append(orders);
+        sb.append('}');
+        return sb.toString();
+    }
 }
