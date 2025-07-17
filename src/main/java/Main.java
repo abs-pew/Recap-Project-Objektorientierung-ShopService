@@ -22,8 +22,15 @@ try {
 
       macShopService.orderRepo.getOrders().forEach(System.out::println);
 
-        macShopService.getOrdersByStatus("Processing");
+      //  macShopService.getOrdersByStatus("Processing");
+        try {
+            macShopService.updateOrderStatus("ORD2", OrderStatusList.IN_DELIVERY);
+        } catch (InvalidOrderId e) {
+            System.out.println(e.getMessage());
+        }
 
+      //  macShopService.getOrdersByStatus("In_devlivery");
+        macShopService.orderRepo.getOrders().forEach(System.out::println);
     }
 
     public static void stockProducts(ProductRepo productRepo) {
