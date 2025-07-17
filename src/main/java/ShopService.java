@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +28,7 @@ public class ShopService {
 
 
         orderIdIndex = orderIdIndex + 1;
-        Order newOrder = new Order("ORD" + orderIdIndex, products, OrderStatusList.PROCESSING);
+        Order newOrder = new Order("ORD" + orderIdIndex, products, OrderStatusList.PROCESSING, ZonedDateTime.now());
 
         return orderRepo.addOrder(newOrder);
     }
