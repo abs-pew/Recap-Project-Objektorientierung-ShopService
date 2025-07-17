@@ -12,7 +12,7 @@ public class OrderMapRepo implements OrderRepo{
     }
 
     @Override
-    public Order getOrderById(String id) {
+    public Order getOrderById(String id) throws InvalidOrderId {
         return orders.get(id);
     }
 

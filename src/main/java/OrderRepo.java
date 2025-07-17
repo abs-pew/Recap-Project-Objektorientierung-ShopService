@@ -4,7 +4,7 @@ public interface OrderRepo {
 
     List<Order> getOrders();
 
-    Order getOrderById(String id);
+    Order getOrderById(String id) throws InvalidOrderId;
 
     Order addOrder(Order newOrder);
 

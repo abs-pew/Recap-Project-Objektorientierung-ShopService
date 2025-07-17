@@ -37,13 +37,17 @@ class OrderMapRepoTest {
         repo.addOrder(newOrder);
 
         //WHEN
-        Order actual = repo.getOrderById("1");
+        try {
+            Order actual = repo.getOrderById("1");
 
         //THEN
         Product product1 = new Product("1", "Apfel");
         Order expected = new Order("1", List.of(product1), OrderStatusList.PROCESSING);
 
         assertEquals(actual, expected);
+        } catch (InvalidOrderId e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
@@ -60,7 +64,12 @@ class OrderMapRepoTest {
         Product product1 = new Product("1", "Apfel");
         Order expected = new Order("1", List.of(product1), OrderStatusList.PROCESSING);
         assertEquals(actual, expected);
-        assertEquals(repo.getOrderById("1"), expected);
+        try {
+            assertEquals(repo.getOrderById("1"), expected);
+        } catch (InvalidOrderId e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     @Test
@@ -72,6 +81,11 @@ class OrderMapRepoTest {
         repo.removeOrder("1");
 
         //THEN
-        assertNull(repo.getOrderById("1"));
+        try {
+            assertNull(repo.getOrderById("1"));
+        } catch (InvalidOrderId e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }

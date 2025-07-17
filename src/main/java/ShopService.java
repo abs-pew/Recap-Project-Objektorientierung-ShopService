@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class ShopService {
     public ProductRepo productRepo;
     public OrderRepo orderRepo;
+    public static int orderIdIndex = 0;
 
     public ShopService(ProductRepo productRepo, OrderRepo orderRepo) {
         this.productRepo = productRepo;
@@ -23,7 +24,9 @@ public class ShopService {
             products.add(productToOrder.get());
         }
 
-        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatusList.PROCESSING);
+
+        orderIdIndex = orderIdIndex + 1;
+        Order newOrder = new Order("ORD" + orderIdIndex, products, OrderStatusList.PROCESSING);
 
         return orderRepo.addOrder(newOrder);
     }
@@ -38,5 +41,15 @@ public class ShopService {
         System.out.println(ordersByStatus.stream().count() + " orders found with status " + status.toUpperCase());
 
         return ordersByStatus;
+    }
+
+    public void updateOrderStatus(String orderId, OrderStatusList newStatus) throws InvalidOrderId {
+        Order orderToUpdate = orderRepo.getOrderById(orderId);
+        if (orderToUpdate == null) {
+            throw new InvalidOrderId("Order ID " + orderId + " is not a valid order ID.");
+        }
+
+        orderToUpdate = orderToUpdate.withOrderStatus(newStatus);
+        orderRepo.addOrder(orderToUpdate);
     }
 } //Class
